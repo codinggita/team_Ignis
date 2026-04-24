@@ -1,0 +1,185 @@
+/* ====================================================
+   HOME PAGE — IGNIS JWAALA Cinematic Homepage
+   ==================================================== */
+
+/* ── Reveal Animation System ── */
+.reveal {
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal--fade-up { transform: translateY(40px); }
+.reveal--slide-left { transform: translateX(-60px); }
+.reveal--slide-right { transform: translateX(60px); }
+.reveal--scale-in { transform: scale(0.9); }
+
+.reveal--visible {
+  opacity: 1;
+  transform: translateY(0) translateX(0) scale(1);
+}
+
+/* ====================================================
+   HERO SECTION
+   ==================================================== */
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: 80px;
+}
+
+.hero__glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  transition: background 0.3s ease;
+}
+
+.hero__glow-static {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 70% 40%, rgba(255, 106, 0, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 30% 80%, rgba(255, 60, 60, 0.06) 0%, transparent 50%);
+  animation: hero-glow-pulse 6s ease-in-out infinite;
+}
+
+/* Ember particles */
+.hero__embers {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ember-particle {
+  position: absolute;
+  bottom: -10px;
+  width: 4px;
+  height: 4px;
+  background: var(--ignis-orange);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 106, 0, 0.6), 0 0 24px rgba(255, 106, 0, 0.3);
+  animation: float-ember 8s ease-in infinite;
+  opacity: 0;
+}
+
+/* Hero content */
+.hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero__text {
+  max-width: 700px;
+}
+
+.hero__title {
+  margin-bottom: var(--space-5);
+  line-height: 0.92;
+}
+
+.hero__title-icon {
+  font-size: clamp(2rem, 4vw, 4rem);
+  display: inline-block;
+  animation: ember-pulse 2s ease-in-out infinite;
+  margin-left: var(--space-3);
+  vertical-align: middle;
+  filter: drop-shadow(0 0 16px rgba(255, 106, 0, 0.5));
+}
+
+/* Stats */
+.hero__stats {
+  display: flex;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+.hero__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.stat-counter {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--ignis-orange);
+  line-height: 1;
+}
+
+/* Modules Grid */
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.module-card {
+  text-align: center;
+  padding: var(--space-8) var(--space-6);
+  position: relative;
+}
+
+/* Poll Card */
+.poll-card {
+  padding: var(--space-8);
+}
+
+.poll-option__bar {
+  height: 6px;
+  background: var(--ignis-border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.poll-option__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ignis-orange), var(--ignis-red));
+  border-radius: 3px;
+}
+
+/* Chat Window */
+.chat-window {
+  overflow: hidden;
+}
+
+.chat-window__messages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+/* Standings */
+.standings-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+  align-items: center;
+}
+
+/* Faction Cards */
+.faction-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+@media (max-width: 1024px) {
+  .battle-grid, .create-grid, .chat-grid, .community-grid, .standings-showcase {
+    grid-template-columns: 1fr;
+  }
+  .modules-grid { grid-template-columns: 1fr; }
+}
