@@ -1,10 +1,12 @@
 import React from 'react'
+import IgnisLayout from './components/layout/IgnisLayout'
+import Home from './pages/Home'
 
 function App() {
   return (
-    <div className="App">
-      <h1>Ignis Jwaala</h1>
-    </div>
+    <IgnisLayout>
+      <Home />
+    </IgnisLayout>
   )
 }
 
