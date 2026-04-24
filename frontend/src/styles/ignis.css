@@ -1,0 +1,12 @@
+/* Ignis Design System — Initial Tokens */
+:root {
+  --ignis-orange: #FF6A00;
+  --ignis-black: #0B0B0B;
+}
+
+body {
+  background: var(--ignis-black);
+  color: white;
+  margin: 0;
+  font-family: sans-serif;
+}
