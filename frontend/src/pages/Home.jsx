@@ -66,6 +66,9 @@ const RevealSection = ({ children, className = '', animation = 'fade-up', delay 
   )
 }
 
+/* ────────────────────────────────────────────────────
+   HOME PAGE
+   ──────────────────────────────────────────────────── */
 const Home = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
 
@@ -82,53 +85,364 @@ const Home = () => {
 
   return (
     <div className="home">
-      {/* Hero Section */}
+
+      {/* ═══════════════════════════════════════════════
+          SECTION 1: HERO
+          ═══════════════════════════════════════════════ */}
       <section className="hero ignis-scanlines" id="hero">
-        <div className="hero__glow" style={{ background: `radial-gradient(ellipse at ${mousePos.x}% ${mousePos.y}%, rgba(255,106,0,0.15) 0%, transparent 70%)` }} />
+        {/* Animated background glow that follows mouse */}
+        <div
+          className="hero__glow"
+          style={{
+            background: `radial-gradient(ellipse at ${mousePos.x}% ${mousePos.y}%, rgba(255,106,0,0.15) 0%, rgba(255,60,60,0.05) 30%, transparent 70%)`
+          }}
+        />
+        <div className="hero__glow-static" />
+
+        {/* Floating ember particles */}
+        <div className="hero__embers">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div
+              key={i}
+              className="ember-particle"
+              style={{
+                left: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 8}s`,
+                animationDuration: `${6 + Math.random() * 6}s`,
+              }}
+            />
+          ))}
+        </div>
+
         <div className="ignis-container hero__content">
           <div className="hero__text">
             <span className="ignis-label ignis-animate-up delay-1">⚡ Welcome to the Arena</span>
+
             <h1 className="ignis-title hero__title ignis-animate-up delay-2">
-              <span className="ignis-fire-text">IGNIS</span><br /><span>JWAALA</span>
+              <span className="ignis-fire-text">IGNIS</span>
+              <br />
+              <span>JWAALA</span>
+              <span className="hero__title-icon">🔥</span>
             </h1>
-            <p className="hero__tagline ignis-animate-up delay-3">Where Opinions Ignite. Where Voices Rule.</p>
+
+            <p className="hero__tagline ignis-animate-up delay-3">
+              Where Opinions Ignite. Where Voices Rule.
+            </p>
+
+            <p className="hero__description ignis-animate-up delay-4">
+              A cinematic Vanguard Arena for real-time polling,
+              live discussions, and faction dominance.
+            </p>
+
             <div className="hero__cta ignis-animate-up delay-5">
-              <button className="ignis-btn-primary">Enter Arena ⚡</button>
-              <button className="ignis-btn-outline">View Factions →</button>
+              <button className="ignis-btn-primary" id="hero-enter-arena">
+                Enter Arena ⚡
+              </button>
+              <button className="ignis-btn-outline" id="hero-view-factions">
+                View Factions →
+              </button>
             </div>
+
+            {/* Live stats */}
             <div className="hero__stats ignis-animate-up delay-6">
               <div className="hero__stat">
                 <AnimatedCounter target={30} suffix="+" />
                 <span className="hero__stat-label">EMBERS</span>
               </div>
+              <div className="hero__stat-divider" />
               <div className="hero__stat">
                 <AnimatedCounter target={5} />
                 <span className="hero__stat-label">BATTLES</span>
               </div>
+              <div className="hero__stat-divider" />
+              <div className="hero__stat">
+                <AnimatedCounter target={4} />
+                <span className="hero__stat-label">FACTIONS</span>
+              </div>
             </div>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="hero__scroll-indicator">
+          <span className="ignis-mono">Scroll to explore</span>
+          <div className="hero__scroll-arrow">↓</div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          SECTION 2: TODAY'S ACTIVE MODULES
+          ═══════════════════════════════════════════════ */}
+      <section className="ignis-section modules-section" id="events">
+        <div className="ignis-container">
+          <RevealSection animation="fade-up">
+            <div className="section-header section-header--center">
+              <span className="ignis-label">⚡ IGNIS PRESENTS</span>
+              <h2 className="ignis-heading">TODAY'S ACTIVE <span className="ignis-fire-text">MODULES</span></h2>
+              <p className="section-subtitle">Choose your engagement. The Arena awaits.</p>
+            </div>
+          </RevealSection>
+
+          <div className="modules-grid">
+            {[
+              { id: '01', title: 'LIVE POLL ARENA', status: 'LIVE', statusColor: '#FF3C3C', desc: 'Cast your vote in the most heated battles of the day.', icon: '🗳️' },
+              { id: '02', title: 'IGNITE MODE', status: 'UPCOMING', statusColor: '#FF6A00', desc: 'A rapid-fire round of polls. Quick answers, big impact.', icon: '⚡' },
+              { id: '03', title: 'TRENDING WAR', status: 'ACTIVE', statusColor: '#2D9F2D', desc: 'Jump into the most debated topics right now.', icon: '🔥' },
+            ].map((module, i) => (
+              <RevealSection key={module.id} animation="scale-in" delay={i * 0.15}>
+                <div className="module-card ignis-card" id={`module-${module.id}`}>
+                  <div className="module-card__header">
+                    <span className="ignis-mono">{module.id} //</span>
+                    <span className="module-status" style={{ color: module.statusColor, borderColor: module.statusColor }}>
+                      ● {module.status}
+                    </span>
+                  </div>
+                  <div className="module-card__icon">{module.icon}</div>
+                  <h3 className="module-card__title">{module.title}</h3>
+                  <p className="module-card__desc">{module.desc}</p>
+                  <div className="module-card__footer">
+                    <span className="ignis-mono">ENTER →</span>
+                  </div>
+                </div>
+              </RevealSection>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Active Modules */}
-      <section className="ignis-section modules-section" id="events">
+      {/* ═══════════════════════════════════════════════
+          SECTION 3: BATTLE STATION (POLL)
+          ═══════════════════════════════════════════════ */}
+      <section className="ignis-section battle-section" id="battles">
         <div className="ignis-container">
-          <RevealSection>
+          <div className="battle-grid">
+            <RevealSection animation="slide-left" className="battle-text">
+              <span className="ignis-label">⚔️ BATTLE STATION</span>
+              <h2 className="ignis-heading battle-heading">
+                REAL OPINIONS.<br />
+                <span className="ignis-fire-text">REAL IMPACT.</span>
+              </h2>
+              <hr className="ignis-divider" />
+              <p className="battle-desc">
+                Engage in polls that shape the conversation. Your vote isn't just a click — it's a declaration of where you stand.
+              </p>
+              <button className="ignis-btn-primary" id="battle-enter">
+                Enter Battle →
+              </button>
+            </RevealSection>
+
+            <RevealSection animation="slide-right" delay={0.2} className="battle-poll">
+              <div className="poll-card ignis-panel">
+                <div className="poll-card__badge">
+                  <span className="module-status" style={{ color: '#FF3C3C', borderColor: '#FF3C3C' }}>● LIVE</span>
+                </div>
+                <h3 className="poll-card__question">Which technology will shape the future the most?</h3>
+                {[
+                  { label: 'Artificial Intelligence', percent: 42 },
+                  { label: 'Quantum Computing', percent: 28 },
+                  { label: 'Blockchain & Web3', percent: 18 },
+                  { label: 'Biotechnology', percent: 12 },
+                ].map((opt, i) => (
+                  <div key={i} className="poll-option">
+                    <div className="poll-option__info">
+                      <span className="poll-option__label">{opt.label}</span>
+                      <span className="poll-option__percent">{opt.percent}%</span>
+                    </div>
+                    <div className="poll-option__bar">
+                      <div className="poll-option__fill" style={{ width: `${opt.percent}%` }} />
+                    </div>
+                  </div>
+                ))}
+                <div className="poll-card__footer">
+                  <span className="ignis-mono">2.3K votes</span>
+                  <span className="ignis-mono">12h remaining</span>
+                </div>
+              </div>
+            </RevealSection>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          SECTION 4: CREATE POLL
+          ═══════════════════════════════════════════════ */}
+      <section className="ignis-section create-section" id="forge">
+        <div className="ignis-container">
+          <div className="create-grid">
+            <RevealSection animation="scale-in" className="create-visual">
+              <div className="create-icon">
+                <div className="create-icon__inner">
+                  <span className="create-icon__symbol">❓</span>
+                  <div className="create-icon__ring" />
+                  <div className="create-icon__ring create-icon__ring--2" />
+                </div>
+              </div>
+            </RevealSection>
+
+            <RevealSection animation="slide-right" delay={0.2} className="create-text">
+              <span className="ignis-label">🛠️ FORGE</span>
+              <h2 className="ignis-heading">
+                ASK. IGNITE.<br />
+                <span className="ignis-fire-text">INFLUENCE.</span>
+              </h2>
+              <hr className="ignis-divider" />
+              <p className="create-desc">
+                Got a question worth debating? Forge it into a poll and watch the Arena
+                come alive with responses.
+              </p>
+              <button className="ignis-btn-outline" id="create-poll-cta">
+                Create Your Poll →
+              </button>
+            </RevealSection>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          SECTION 5: ARENA COMMS (CHAT)
+          ═══════════════════════════════════════════════ */}
+      <section className="ignis-section chat-section" id="arena">
+        <div className="ignis-container">
+          <div className="chat-grid">
+            <RevealSection animation="slide-left" className="chat-text">
+              <span className="ignis-label">💬 ARENA COMMS</span>
+              <h2 className="ignis-heading">
+                DISCUSS. DEBATE.<br />
+                <span className="ignis-fire-text">DOMINATE.</span>
+              </h2>
+              <hr className="ignis-divider" />
+              <p className="chat-desc">
+                Enter the real-time discussion arena. Debate with fellow Embers, defend your faction, and shape public opinion.
+              </p>
+              <button className="ignis-btn-primary" id="join-chat-cta">
+                Join The Chat 💬
+              </button>
+            </RevealSection>
+
+            <RevealSection animation="slide-right" delay={0.2} className="chat-preview">
+              <div className="chat-window ignis-panel">
+                <div className="chat-window__header">
+                  <span className="ignis-label" style={{ marginBottom: 0 }}>💬 LIVE CHAT</span>
+                  <span className="module-status" style={{ color: '#2D9F2D', borderColor: '#2D9F2D' }}>● ONLINE</span>
+                </div>
+                <div className="chat-window__messages">
+                  {[
+                    { user: 'Aether_7', faction: 'ventus', color: '#9B5DE5', msg: 'AI is clearly dominating this poll 🔥', time: '2m ago' },
+                    { user: 'BlazeKing', faction: 'ignis', color: '#FF6A00', msg: 'Quantum Computing will surprise everyone. Mark my words.', time: '1m ago' },
+                    { user: 'TerraForce', faction: 'terra', color: '#2D9F2D', msg: 'Biotech is underrated. Look at the breakthroughs.', time: '45s ago' },
+                    { user: 'WaveRider', faction: 'aqua', color: '#00B4D8', msg: 'Web3 had its chance. Next.', time: '12s ago' },
+                  ].map((msg, i) => (
+                    <div key={i} className="chat-msg">
+                      <div className="chat-msg__header">
+                        <span className="chat-msg__user" style={{ color: msg.color }}>{msg.user}</span>
+                        <span className="chat-msg__badge" style={{ borderColor: msg.color, color: msg.color }}>{msg.faction.toUpperCase()}</span>
+                        <span className="chat-msg__time ignis-mono">{msg.time}</span>
+                      </div>
+                      <p className="chat-msg__text">{msg.msg}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="chat-window__input">
+                  <input type="text" placeholder="Type your message..." className="ignis-input" disabled />
+                </div>
+              </div>
+            </RevealSection>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          SECTION 6: GLOBAL STANDINGS
+          ═══════════════════════════════════════════════ */}
+      <section className="ignis-section standings-section" id="factions">
+        <div className="ignis-container">
+          <RevealSection animation="fade-up">
             <div className="section-header section-header--center">
-              <span className="ignis-label">⚡ IGNIS PRESENTS</span>
-              <h2 className="ignis-heading">TODAY'S ACTIVE <span className="ignis-fire-text">MODULES</span></h2>
+              <span className="ignis-label">🏆 DOMINANCE RANK</span>
+              <h2 className="ignis-heading">GLOBAL <span className="ignis-fire-text">STANDINGS</span></h2>
             </div>
           </RevealSection>
-          <div className="modules-grid">
-            {['LIVE POLL ARENA', 'IGNITE MODE', 'TRENDING WAR'].map((title, i) => (
-              <RevealSection key={i} animation="scale-in" delay={i * 0.1}>
-                <div className="module-card ignis-card">
-                  <h3 className="module-card__title">{title}</h3>
-                  <p className="module-card__desc">Engage in the arena modules to earn Embers.</p>
-                  <span className="ignis-mono">ENTER →</span>
-                </div>
-              </RevealSection>
-            ))}
+
+          <RevealSection animation="scale-in" delay={0.2}>
+            <div className="standings-showcase">
+              <div className="standings-orb">
+                <div className="standings-orb__glow" />
+                <span className="standings-orb__text ignis-fire-text">IGNIS</span>
+                <span className="standings-orb__rank">#1 DOMINANT FACTION</span>
+              </div>
+
+              <div className="standings-bars">
+                {[
+                  { name: 'IGNIS', color: '#FF6A00', score: 85, icon: '🔥' },
+                  { name: 'AQUA', color: '#00B4D8', score: 72, icon: '🌊' },
+                  { name: 'TERRA', color: '#2D9F2D', score: 64, icon: '🌱' },
+                  { name: 'VENTUS', color: '#9B5DE5', score: 58, icon: '🌪️' },
+                ].map((faction, i) => (
+                  <div key={i} className="standings-bar">
+                    <div className="standings-bar__info">
+                      <span className="standings-bar__icon">{faction.icon}</span>
+                      <span className="standings-bar__name">{faction.name}</span>
+                      <span className="standings-bar__score ignis-mono">{faction.score}pts</span>
+                    </div>
+                    <div className="standings-bar__track">
+                      <div
+                        className="standings-bar__fill"
+                        style={{ width: `${faction.score}%`, background: faction.color }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </RevealSection>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          SECTION 7: COMMUNITY
+          ═══════════════════════════════════════════════ */}
+      <section className="ignis-section community-section">
+        <div className="ignis-container">
+          <div className="community-grid">
+            <RevealSection animation="slide-left" className="community-text">
+              <span className="ignis-label">🔥 FACTION DOMINANCE</span>
+              <h2 className="ignis-heading community-heading">
+                30 EMBERS.<br />
+                <span className="ignis-fire-text">ONE FIRE.</span>
+              </h2>
+              <hr className="ignis-divider" />
+              <p className="community-desc">
+                Choose your allegiance. Compete for dominance. Rise through the ranks.
+                Every vote, every debate, every action fuels your faction's fire.
+              </p>
+              <button className="ignis-btn-outline" id="explore-factions">
+                Explore Factions →
+              </button>
+            </RevealSection>
+
+            <RevealSection animation="fade-up" delay={0.15} className="community-cards">
+              <div className="faction-cards">
+                {[
+                  { name: 'IGNIS', icon: '🔥', color: '#FF6A00', desc: 'The fire within. Bold, fierce, dominant.' },
+                  { name: 'AQUA', icon: '🌊', color: '#00B4D8', desc: 'The calm tide. Strategic, adaptive, fluid.' },
+                  { name: 'TERRA', icon: '🌱', color: '#2D9F2D', desc: 'The grounded force. Resilient, steady, powerful.' },
+                  { name: 'VENTUS', icon: '🌪️', color: '#9B5DE5', desc: 'The swift wind. Agile, unpredictable, creative.' },
+                ].map((faction, i) => (
+                  <RevealSection key={i} animation="scale-in" delay={0.1 + i * 0.12}>
+                    <div
+                      className="faction-card ignis-card"
+                      style={{ '--faction-accent': faction.color }}
+                      id={`faction-${faction.name.toLowerCase()}`}
+                    >
+                      <div className="faction-card__icon">{faction.icon}</div>
+                      <h3 className="faction-card__name" style={{ color: faction.color }}>{faction.name}</h3>
+                      <p className="faction-card__desc">{faction.desc}</p>
+                      <div className="faction-card__glow" />
+                    </div>
+                  </RevealSection>
+                ))}
+              </div>
+            </RevealSection>
           </div>
         </div>
       </section>

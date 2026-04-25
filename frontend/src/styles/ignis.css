@@ -1,8 +1,3 @@
-/* ====================================================
-   IGNIS JWAALA — Global Design Tokens & Base Styles
-   Phase: 1 (UI-first, pre-3D)
-   ==================================================== */
-
 :root {
   /* ── Background Scale ── */
   --ignis-black:     #0B0B0B;
@@ -126,7 +121,7 @@ body {
   color: var(--ignis-text);
   font-family: var(--font-body);
   font-size: var(--text-base);
-  line-height: 1.6;
+  line-height: 1.4;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -155,7 +150,7 @@ img {
   font-family: var(--font-display);
   font-size: var(--text-hero);
   font-weight: 700;
-  line-height: 0.95;
+  line-height: 0.8;
   text-transform: uppercase;
   letter-spacing: -0.02em;
 }
@@ -166,6 +161,7 @@ img {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.02em;
+  line-height: 1.1;
 }
 
 .ignis-subheading {
@@ -173,6 +169,7 @@ img {
   font-size: var(--text-2xl);
   font-weight: 600;
   text-transform: uppercase;
+  line-height: 1.2;
 }
 
 .ignis-label {
@@ -343,8 +340,61 @@ img {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes ignis-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes ignis-scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float-ember {
+  0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(-100vh) translateX(40px) scale(0.3); opacity: 0; }
+}
+
+@keyframes hero-glow-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%      { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(8px); }
+}
+
+@keyframes counter-glow {
+  0%, 100% { text-shadow: 0 0 12px rgba(255, 106, 0, 0.3); }
+  50%      { text-shadow: 0 0 24px rgba(255, 106, 0, 0.6); }
+}
+
+@keyframes marquee-slide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes ignis-scan {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(100vh); }
+}
+
 .ignis-ember      { animation: ember-pulse 2.5s ease-in-out infinite; }
 .ignis-animate-up { animation: ignis-fade-up 0.7s var(--ease-slow) both; }
+.ignis-animate-in { animation: ignis-fade-in 0.6s ease both; }
+.ignis-animate-scale { animation: ignis-scale-in 0.5s var(--ease-slow) both; }
+
+/* Staggered delays */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+.delay-6 { animation-delay: 0.6s; }
+.delay-7 { animation-delay: 0.7s; }
 
 /* ====================================================
    Scan line overlay (Game HUD)
@@ -363,4 +413,106 @@ img {
   );
   pointer-events: none;
   z-index: 0;
+}
+
+/* ====================================================
+   3D Section Protection
+   ==================================================== */
+
+.ignis-3d-section {
+  position: relative;
+}
+
+.ignis-3d-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(11, 11, 11, 0.85) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ignis-3d-section > * {
+  position: relative;
+  z-index: 2;
+}
+
+.ignis-3d-placeholder {
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+  width: 40vw;
+  height: 80vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ====================================================
+   Link Hover
+   ==================================================== */
+
+.ignis-link {
+  position: relative;
+  color: var(--ignis-white);
+  text-decoration: none;
+  transition: color var(--ease-fast);
+}
+
+.ignis-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--ignis-orange);
+  transition: width var(--ease-base);
+}
+
+.ignis-link:hover {
+  color: var(--ignis-orange);
+}
+
+.ignis-link:hover::after {
+  width: 100%;
+}
+
+/* ====================================================
+   Scrollbar
+   ==================================================== */
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--ignis-black); }
+::-webkit-scrollbar-thumb { background: var(--ignis-orange); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--ignis-amber); }
+
+/* ====================================================
+   Reduced Motion
+   ==================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .ignis-ember { animation: none; }
+}
+
+/* ====================================================
+   Responsive Breakpoints
+   ==================================================== */
+
+@media (max-width: 768px) {
+  .col-4, .col-6, .col-8 { grid-column: span 12; }
+
+  .ignis-container { padding: 0 var(--space-5); }
+
+  .ignis-section { padding: var(--space-16) 0; }
+
+  .ignis-title { font-size: clamp(2.2rem, 10vw, 4rem); }
+}
+
+@media (max-width: 480px) {
+  .ignis-container { padding: 0 var(--space-4); }
 }

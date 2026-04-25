@@ -5,31 +5,26 @@
 /* ── Reveal Animation System ── */
 .reveal {
   opacity: 0;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.8s var(--ease-slow);
 }
-
 .reveal--fade-up { transform: translateY(40px); }
-.reveal--slide-left { transform: translateX(-60px); }
-.reveal--slide-right { transform: translateX(60px); }
-.reveal--scale-in { transform: scale(0.9); }
-
+.reveal--slide-left { transform: translateX(-40px); }
+.reveal--slide-right { transform: translateX(40px); }
+.reveal--scale-in { transform: scale(0.95); }
 .reveal--visible {
   opacity: 1;
-  transform: translateY(0) translateX(0) scale(1);
+  transform: translate(0) scale(1);
 }
 
 /* ====================================================
-   HERO SECTION
+   SECTION 1: HERO
    ==================================================== */
-
 .hero {
   min-height: 100vh;
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
-  padding-top: 80px;
 }
 
 .hero__glow {
@@ -43,39 +38,38 @@
 .hero__glow-static {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    rgba(255, 106, 0, 0.08) 0%,
+    transparent 60%
+  );
   pointer-events: none;
-  background:
-    radial-gradient(ellipse at 70% 40%, rgba(255, 106, 0, 0.12) 0%, transparent 55%),
-    radial-gradient(ellipse at 30% 80%, rgba(255, 60, 60, 0.06) 0%, transparent 50%);
-  animation: hero-glow-pulse 6s ease-in-out infinite;
+  z-index: 0;
 }
 
-/* Ember particles */
 .hero__embers {
   position: absolute;
   inset: 0;
-  z-index: 1;
   pointer-events: none;
-  overflow: hidden;
+  z-index: 1;
 }
 
 .ember-particle {
   position: absolute;
-  bottom: -10px;
-  width: 4px;
-  height: 4px;
+  bottom: -20px;
+  width: 3px;
+  height: 3px;
   background: var(--ignis-orange);
   border-radius: 50%;
-  box-shadow: 0 0 8px rgba(255, 106, 0, 0.6), 0 0 24px rgba(255, 106, 0, 0.3);
-  animation: float-ember 8s ease-in infinite;
-  opacity: 0;
+  box-shadow: 0 0 8px var(--ignis-orange);
+  animation: float-ember linear infinite;
 }
 
-/* Hero content */
 .hero__content {
   position: relative;
-  z-index: 2;
+  z-index: 10;
+  padding-top: 80px;
+  padding-bottom: 80px;
 }
 
 .hero__text {
@@ -83,31 +77,48 @@
 }
 
 .hero__title {
-  margin-bottom: var(--space-5);
-  line-height: 0.92;
+  margin: var(--space-5) 0;
+  position: relative;
 }
 
 .hero__title-icon {
-  font-size: clamp(2rem, 4vw, 4rem);
   display: inline-block;
-  animation: ember-pulse 2s ease-in-out infinite;
-  margin-left: var(--space-3);
+  font-size: 0.5em;
   vertical-align: middle;
-  filter: drop-shadow(0 0 16px rgba(255, 106, 0, 0.5));
+  margin-left: var(--space-3);
 }
 
-/* Stats */
+.hero__tagline {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  letter-spacing: 0.05em;
+  color: var(--ignis-muted);
+  margin-bottom: var(--space-3);
+}
+
+.hero__description {
+  color: var(--ignis-muted);
+  font-size: var(--text-md);
+  line-height: 1.5;
+  margin-bottom: var(--space-6);
+  max-width: 550px;
+}
+
+.hero__cta {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
 .hero__stats {
   display: flex;
-  gap: var(--space-8);
-  align-items: center;
+  gap: var(--space-10);
+  margin-top: var(--space-12);
 }
 
 .hero__stat {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 2px;
 }
 
 .stat-counter {
@@ -115,71 +126,596 @@
   font-size: var(--text-4xl);
   font-weight: 700;
   color: var(--ignis-orange);
-  line-height: 1;
+  animation: counter-glow 3s ease-in-out infinite;
 }
 
-/* Modules Grid */
+.stat-suffix {
+  color: var(--ignis-orange);
+}
+
+.hero__stat-label {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  letter-spacing: 0.2em;
+  color: var(--ignis-muted);
+  margin-top: var(--space-1);
+}
+
+.hero__stat-divider {
+  width: 1px;
+  background: var(--ignis-border);
+}
+
+/* Scroll Indicator */
+.hero__scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  z-index: 10;
+}
+
+.hero__scroll-arrow {
+  font-size: 1.2rem;
+  color: var(--ignis-orange);
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+/* ====================================================
+   SECTION HEADERS (shared)
+   ==================================================== */
+.section-header {
+  margin-bottom: var(--space-10);
+}
+
+.section-header--center {
+  text-align: center;
+}
+
+.section-subtitle {
+  color: var(--ignis-muted);
+  font-size: var(--text-md);
+  margin-top: var(--space-3);
+}
+
+/* ====================================================
+   MODULE STATUS BADGE (shared)
+   ==================================================== */
+.module-status {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border: 1px solid;
+  border-radius: var(--radius-pill);
+}
+
+/* ====================================================
+   SECTION 2: ACTIVE MODULES
+   ==================================================== */
 .modules-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-6);
+  margin-top: var(--space-10);
 }
 
 .module-card {
-  text-align: center;
-  padding: var(--space-8) var(--space-6);
+  padding: var(--space-8);
+  cursor: pointer;
   position: relative;
 }
 
-/* Poll Card */
+.module-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-5);
+}
+
+.module-card__icon {
+  font-size: 2rem;
+  margin-bottom: var(--space-4);
+}
+
+.module-card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-3);
+}
+
+.module-card__desc {
+  color: var(--ignis-muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  margin-bottom: var(--space-5);
+}
+
+.module-card__footer {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--ignis-border);
+}
+
+/* ====================================================
+   SECTION 3: BATTLE STATION (POLL)
+   ==================================================== */
+.battle-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+
+.battle-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.battle-heading {
+  line-height: 1.1;
+}
+
+.battle-desc {
+  color: var(--ignis-muted);
+  font-size: var(--text-md);
+  line-height: 1.7;
+  margin-bottom: var(--space-8);
+}
+
+.battle-poll {
+  perspective: 1000px;
+}
+
 .poll-card {
-  padding: var(--space-8);
+  transform: rotateY(-3deg) rotateX(1deg);
+  transition: transform var(--ease-spring);
+}
+
+.poll-card:hover {
+  transform: rotateY(0deg) rotateX(0deg);
+}
+
+.poll-card__badge {
+  margin-bottom: var(--space-4);
+}
+
+.poll-card__question {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  margin-bottom: var(--space-6);
+  line-height: 1.3;
+}
+
+.poll-option {
+  margin-bottom: var(--space-4);
+}
+
+.poll-option__info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-sm);
 }
 
 .poll-option__bar {
-  height: 6px;
+  height: 8px;
   background: var(--ignis-border);
-  border-radius: 3px;
+  border-radius: var(--radius-pill);
   overflow: hidden;
 }
 
 .poll-option__fill {
   height: 100%;
   background: linear-gradient(90deg, var(--ignis-orange), var(--ignis-red));
-  border-radius: 3px;
+  border-radius: var(--radius-pill);
+  transition: width 1.2s var(--ease-spring);
 }
 
-/* Chat Window */
-.chat-window {
-  overflow: hidden;
-}
-
-.chat-window__messages {
+.poll-card__footer {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  max-height: 320px;
-  overflow-y: auto;
+  justify-content: space-between;
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--ignis-border);
 }
 
-/* Standings */
-.standings-showcase {
+/* ====================================================
+   SECTION 4: FORGE (CREATE POLL)
+   ==================================================== */
+.create-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-16);
+  gap: var(--space-10);
   align-items: center;
 }
 
-/* Faction Cards */
+.create-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-icon {
+  width: 240px;
+  height: 240px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-icon__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-icon__symbol {
+  font-size: 64px;
+  z-index: 2;
+}
+
+.create-icon__ring {
+  position: absolute;
+  inset: 0;
+  border: 2px dashed var(--ignis-orange);
+  border-radius: 50%;
+  animation: spin 20s linear infinite;
+  opacity: 0.5;
+}
+
+.create-icon__ring--2 {
+  inset: 20px;
+  border: 2px solid var(--ignis-red);
+  animation: spin 15s linear infinite reverse;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.create-desc {
+  color: var(--ignis-muted);
+  font-size: var(--text-md);
+  line-height: 1.7;
+  margin-bottom: var(--space-8);
+}
+
+/* ====================================================
+   SECTION 5: ARENA COMMS (CHAT)
+   ==================================================== */
+.chat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+
+.chat-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-desc {
+  color: var(--ignis-muted);
+  font-size: var(--text-md);
+  line-height: 1.7;
+  margin-bottom: var(--space-8);
+}
+
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  height: 420px;
+}
+
+.chat-window__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--ignis-border);
+  margin-bottom: var(--space-4);
+}
+
+.chat-window__messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-right: var(--space-2);
+}
+
+.chat-msg {
+  background: var(--ignis-surface);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--ignis-border);
+  transition: border-color var(--ease-fast);
+}
+
+.chat-msg:hover {
+  border-left-color: var(--ignis-orange);
+}
+
+.chat-msg__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.chat-msg__user {
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+
+.chat-msg__badge {
+  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  padding: 2px 6px;
+  border: 1px solid;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.chat-msg__time {
+  margin-left: auto;
+  font-size: 0.7rem;
+}
+
+.chat-msg__text {
+  font-size: var(--text-sm);
+  color: var(--ignis-text);
+  line-height: 1.5;
+}
+
+.chat-window__input {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--ignis-border);
+}
+
+.ignis-input {
+  width: 100%;
+  background: var(--ignis-black);
+  border: 1px solid var(--ignis-border);
+  color: var(--ignis-text);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  transition: border-color var(--ease-fast), box-shadow var(--ease-fast);
+}
+
+.ignis-input:focus {
+  outline: none;
+  border-color: var(--ignis-orange);
+  box-shadow: 0 0 0 3px var(--ignis-glow-soft);
+}
+
+/* ====================================================
+   SECTION 6: GLOBAL STANDINGS
+   ==================================================== */
+.standings-showcase {
+  margin-top: var(--space-10);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+
+.standings-orb {
+  position: relative;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.standings-orb__glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255, 106, 0, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: ember-pulse 3s ease-in-out infinite;
+}
+
+.standings-orb__text {
+  font-size: 4rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  z-index: 2;
+}
+
+.standings-orb__rank {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ignis-orange);
+  letter-spacing: 0.1em;
+  z-index: 2;
+  margin-top: var(--space-2);
+}
+
+.standings-bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.standings-bar__info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.standings-bar__icon {
+  font-size: 1.5rem;
+}
+
+.standings-bar__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  letter-spacing: 0.05em;
+}
+
+.standings-bar__score {
+  margin-left: auto;
+  color: var(--ignis-orange);
+}
+
+.standings-bar__track {
+  height: 12px;
+  background: var(--ignis-surface);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  border: 1px solid var(--ignis-border);
+}
+
+.standings-bar__fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  transition: width 1.5s var(--ease-slow);
+}
+
+/* ====================================================
+   SECTION 7: COMMUNITY / FACTIONS
+   ==================================================== */
+.community-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+
+.community-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.community-heading {
+  line-height: 1.1;
+}
+
+.community-desc {
+  color: var(--ignis-muted);
+  font-size: var(--text-md);
+  line-height: 1.7;
+  margin-bottom: var(--space-8);
+}
+
 .faction-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-4);
 }
 
-@media (max-width: 1024px) {
-  .battle-grid, .create-grid, .chat-grid, .community-grid, .standings-showcase {
+.faction-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.faction-card__icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-3);
+}
+
+.faction-card__name {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.faction-card__desc {
+  color: var(--ignis-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.faction-card__glow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: var(--faction-accent);
+  filter: blur(50px);
+  opacity: 0.15;
+  transition: opacity var(--ease-base);
+  pointer-events: none;
+}
+
+.faction-card:hover .faction-card__glow {
+  opacity: 0.35;
+}
+
+/* ====================================================
+   Ember Keyframes (Home-specific)
+   ==================================================== */
+@keyframes float-ember {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  90% { opacity: 0.6; }
+  100% {
+    transform: translateY(-100vh) translateX(40px) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* ====================================================
+   Responsive
+   ==================================================== */
+@media (max-width: 768px) {
+  .hero__text { max-width: 100%; }
+  .hero__stats { gap: var(--space-6); }
+  .stat-counter { font-size: var(--text-2xl); }
+
+  .modules-grid {
     grid-template-columns: 1fr;
   }
-  .modules-grid { grid-template-columns: 1fr; }
+
+  .battle-grid,
+  .create-grid,
+  .chat-grid,
+  .standings-showcase,
+  .community-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .faction-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .create-visual {
+    order: -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__cta { flex-direction: column; }
+  .hero__stats { flex-direction: column; gap: var(--space-4); }
+  .hero__stat-divider { display: none; }
 }

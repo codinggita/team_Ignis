@@ -1,79 +1,47 @@
 import React, { useState, useEffect } from 'react'
 import './IgnisLayout.css'
 
-const navLinks = [
-  { label: 'Events', href: '#events' },
-  { label: 'Battles', href: '#battles' },
-  { label: 'Factions', href: '#factions' },
-  { label: 'Forge', href: '#forge' },
-  { label: 'Arena', href: '#arena' },
-]
-
 const IgnisLayout = ({ children }) => {
   const [scrolled, setScrolled] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 60)
+    const handleScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
     <div className="ignis-app">
-      {/* ── Navigation ── */}
       <header className={`ignis-nav ${scrolled ? 'ignis-nav--scrolled' : ''}`}>
         <div className="ignis-nav__inner">
           <a href="/" className="ignis-nav__logo">
             <span className="ignis-nav__logo-icon">🔥</span>
-            <span className="ignis-fire-text ignis-nav__logo-brand">IGNIS</span>
-            <span className="ignis-nav__logo-sub">JWAALA</span>
+            <span className="ignis-fire-text" style={{ fontWeight: 800, fontSize: '1.3rem', fontFamily: 'var(--font-display)' }}>IGNIS</span>
+            <span style={{ fontWeight: 600, fontSize: '1.3rem', fontFamily: 'var(--font-display)', color: 'var(--ignis-white)', marginLeft: '6px' }}>JWAALA</span>
           </a>
-
-          <nav className={`ignis-nav__links ${mobileOpen ? 'ignis-nav__links--open' : ''}`}>
-            {navLinks.map(item => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="ignis-nav__link"
-                onClick={() => setMobileOpen(false)}
-              >
-                {item.label}
-              </a>
+          <nav className="ignis-nav__links">
+            {['EVENTS', 'BATTLES', 'FACTIONS', 'FORGE', 'ARENA'].map(l => (
+              <a key={l} href={`#${l.toLowerCase()}`} className="ignis-nav__link">{l}</a>
             ))}
           </nav>
-
-          <button className="ignis-btn-primary ignis-nav__cta">
-            Enter Arena ⚡
-          </button>
-
-          <button
-            className="ignis-nav__hamburger"
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            <span className={`ignis-nav__hamburger-line ${mobileOpen ? 'open' : ''}`} />
-            <span className={`ignis-nav__hamburger-line ${mobileOpen ? 'open' : ''}`} />
-            <span className={`ignis-nav__hamburger-line ${mobileOpen ? 'open' : ''}`} />
+          <button className="ignis-btn-primary" style={{ padding: '10px 24px', fontSize: '0.8rem' }}>
+            ENTER ARENA ⚡
           </button>
         </div>
       </header>
 
-      {/* ── Main Content ── */}
       <main>{children}</main>
 
-      {/* ── Footer ── */}
       <footer className="ignis-footer">
-        <div className="ignis-container">
-          <div className="ignis-footer__inner">
-            <div className="ignis-footer__brand">
-              <span className="ignis-fire-text ignis-footer__logo">IGNIS JWAALA</span>
-              <span className="ignis-mono">// ARENA SYSTEM V1.0</span>
-            </div>
-            <div className="ignis-footer__links">
-              <a href="#">Privacy</a>
-              <a href="#">Terms</a>
-              <a href="#">GitHub</a>
-            </div>
+        <div className="ignis-container ignis-footer__inner">
+          <div>
+            <span className="ignis-fire-text" style={{ fontWeight: 800, fontSize: '1.1rem', fontFamily: 'var(--font-display)' }}>IGNIS JWAALA</span>
+            <span className="ignis-mono" style={{ marginLeft: '12px', fontSize: '0.7rem' }}>// ARENA SYSTEM V1.0</span>
+          </div>
+          <div className="ignis-footer__links">
+            <a href="#" className="ignis-link ignis-mono" style={{ fontSize: '0.8rem' }}>Privacy</a>
+            <a href="#" className="ignis-link ignis-mono" style={{ fontSize: '0.8rem' }}>Terms</a>
+            <a href="#" className="ignis-link ignis-mono" style={{ fontSize: '0.8rem' }}>GitHub</a>
           </div>
         </div>
       </footer>

@@ -1,62 +1,97 @@
+/* ====================================================
+   IGNIS LAYOUT — Navigation & Footer
+   ==================================================== */
+
+.ignis-app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.ignis-app > main {
+  flex: 1;
+}
+
+/* ── Navigation ── */
 .ignis-nav {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 0;
   z-index: var(--z-nav);
-  padding: 16px 0;
-  transition: all var(--ease-base);
+  transition: all 0.4s var(--ease-slow);
 }
 
 .ignis-nav--scrolled {
-  background: rgba(11, 11, 11, 0.92);
-  backdrop-filter: blur(16px);
-  padding: 10px 0;
-  border-bottom: 1px solid var(--ignis-border);
+  background: rgba(8, 8, 8, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 14px 0;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
 
 .ignis-nav__inner {
-  max-width: 1280px;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 0 var(--space-10);
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
 }
 
 .ignis-nav__logo {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
+  text-decoration: none;
 }
 
-.ignis-nav__logo-brand {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 700;
+.ignis-nav__logo-icon {
+  font-size: 1.4rem;
+  margin-right: 4px;
 }
 
 .ignis-nav__links {
   display: flex;
-  gap: var(--space-8);
+  gap: 36px;
 }
 
 .ignis-nav__link {
   font-family: var(--font-display);
-  font-size: var(--text-sm);
+  font-size: 0.85rem;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   color: var(--ignis-muted);
+  text-decoration: none;
+  transition: color var(--ease-fast);
+  position: relative;
+}
+
+.ignis-nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--ignis-orange);
+  transition: width var(--ease-base);
 }
 
 .ignis-nav__link:hover {
   color: var(--ignis-orange);
 }
 
+.ignis-nav__link:hover::after {
+  width: 100%;
+}
+
+/* ── Footer ── */
 .ignis-footer {
-  background: var(--ignis-deep);
-  border-top: 1px solid var(--ignis-border);
   padding: var(--space-10) 0;
-  margin-top: var(--space-20);
+  border-top: 1px solid var(--ignis-border);
+  background: var(--ignis-deep);
 }
 
 .ignis-footer__inner {
@@ -65,21 +100,24 @@
   align-items: center;
 }
 
-.ignis-footer__logo {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-
 .ignis-footer__links {
   display: flex;
-  gap: var(--space-6);
-  font-size: var(--text-sm);
-  color: var(--ignis-muted);
+  gap: var(--space-8);
 }
 
+/* ── Responsive ── */
 @media (max-width: 768px) {
-  .ignis-nav__links { display: none; }
-  .ignis-nav__hamburger { display: flex; flex-direction: column; gap: 5px; background: none; border: none; }
-  .ignis-nav__hamburger-line { width: 24px; height: 2px; background: white; }
+  .ignis-nav__links {
+    display: none;
+  }
+
+  .ignis-nav__inner {
+    padding: 0 var(--space-5);
+  }
+
+  .ignis-footer__inner {
+    flex-direction: column;
+    gap: var(--space-4);
+    text-align: center;
+  }
 }
