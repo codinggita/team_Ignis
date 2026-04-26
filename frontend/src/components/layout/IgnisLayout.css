@@ -1,0 +1,123 @@
+/* ====================================================
+   IGNIS LAYOUT — Navigation & Footer
+   ==================================================== */
+
+.ignis-app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.ignis-app > main {
+  flex: 1;
+}
+
+/* ── Navigation ── */
+.ignis-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 0;
+  z-index: var(--z-nav);
+  transition: all 0.4s var(--ease-slow);
+}
+
+.ignis-nav--scrolled {
+  background: rgba(8, 8, 8, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 14px 0;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.ignis-nav__inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 var(--space-10);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ignis-nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+}
+
+.ignis-nav__logo-icon {
+  font-size: 1.4rem;
+  margin-right: 4px;
+}
+
+.ignis-nav__links {
+  display: flex;
+  gap: 36px;
+}
+
+.ignis-nav__link {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--ignis-muted);
+  text-decoration: none;
+  transition: color var(--ease-fast);
+  position: relative;
+}
+
+.ignis-nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--ignis-orange);
+  transition: width var(--ease-base);
+}
+
+.ignis-nav__link:hover {
+  color: var(--ignis-orange);
+}
+
+.ignis-nav__link:hover::after {
+  width: 100%;
+}
+
+/* ── Footer ── */
+.ignis-footer {
+  padding: var(--space-10) 0;
+  border-top: 1px solid var(--ignis-border);
+  background: var(--ignis-deep);
+}
+
+.ignis-footer__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ignis-footer__links {
+  display: flex;
+  gap: var(--space-8);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .ignis-nav__links {
+    display: none;
+  }
+
+  .ignis-nav__inner {
+    padding: 0 var(--space-5);
+  }
+
+  .ignis-footer__inner {
+    flex-direction: column;
+    gap: var(--space-4);
+    text-align: center;
+  }
+}
